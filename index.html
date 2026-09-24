@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Prompt Üretici</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            button:hover {
+                background: #45a049;
+            }
+
+        .result {
+            background: #e2e8f0;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>🎨 AI Prompt Üretici</h2>
+
+        <label>Kim / Ne:</label>
+        <input type="text" id="kisi" placeholder="Örn: yeşil tavşan">
+
+        <label>Ne Yapıyor?:</label>
+        <input type="text" id="eylem" placeholder="Örn: çilek yiyor">
+
+        <label>Nerede?:</label>
+        <input type="text" id="yer" placeholder="Örn: çilek tarlası">
+
+        <label>Nasıl Görünüyor?:</label>
+        <input type="text" id="gorunum" placeholder="Örn: sevimli, tüylü">
+
+        <label>Kamera / Kadraj:</label>
+        <input type="text" id="kamera" placeholder="Örn: tüm vücudu görünsün">
+
+        <label>Stil:</label>
+        <input type="text" id="stil" placeholder="Örn: gerçekçi fotoğraf">
+
+        <button onclick="uret()">Prompt Oluştur</button>
+
+        <h3>Türkçe Hali:</h3>
+        <div class="result" id="trSonuc">-</div>
+
+        <h3>İngilizce Hali (Kopyala & Yapıştır):</h3>
+        <div class="result" id="enSonuc" style="background: #d4edda; font-weight: bold;">-</div>
+    </div>
+
+    <script>
+    // Basit bir sözlük (İstediğin kelimeyi ekleyebilirsin)
+    const sozluk = {
+        "yeşil tavşan": "green rabbit",
+        "çilek yiyor": "eating strawberries",
+        "çilek tarlası": "strawberry field",
+        "sevimli": "cute",
+        "tüylü": "fluffy",
+        "büyük kulaklı": "with big ears",
+        "güneşli": "sunny",
+        "güzel": "beautiful",
+        "tüm vücudu görünsün": "full body shot",
+        "gerçekçi fotoğraf": "realistic photography",
+        "bir kadın": "a woman",
+        "bisiklet sürüyor": "riding a bicycle",
+        "sahil yolunda": "on a coastal road",
+        "kırmızı elbiseli ve uzun saçlı": "wearing a red dress and long hair",
+        "tam boy görünüyor": "full body view"
+    };
+
+    function cevir(metin) {
+        let temizMetin = metin.toLowerCase().trim();
+        return sozluk[temizMetin] || temizMetin; // Sözlükte varsa İngilizcesini verir, yoksa aynen bırakır
+    }
+
+    function uret() {
+        let kisi = document.getElementById('kisi').value;
+        let eylem = document.getElementById('eylem').value;
+        let yer = document.getElementById('yer.').value || document.getElementById('yer').value;
+        let gorunum = document.getElementById('gorunum').value;
+        let kamera = document.getElementById('kamera').value;
+        let stil = document.getElementById('stil').value;
+
+        // Türkçe Cümle
+        let tr = `${kisi}, ${yer} içinde ${eylem}. Görünüşü: ${gorunum}. Kadraj: ${kamera}. Stil: ${stil}.`;
+        document.getElementById('trSonuc').innerText = tr;
+
+        // İngilizce Cümle (Prompt)
+        let en = `${cevir(kisi)} ${cevir(eylem)} in ${cevir(yer)}, ${cevir(gorunum)}, ${cevir(kamera)}, ${cevir(stil)}`;
+        document.getElementById('enSonuc').innerText = en;
+    }
+    </script>
+
+</body>
+</html>
