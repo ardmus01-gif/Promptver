@@ -3,107 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro AI Prompt Stüdyosu (Canlı Çeviri)</title>
+    <title>Pro AI Prompt Stüdyosu (Fotoğraf & Video)</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; max-width: 700px; margin: auto; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; max-width: 750px; margin: auto; }
         .box { background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid #334155; }
         h2 { text-align: center; color: #38bdf8; margin-bottom: 20px; }
+        
+        /* Sekme Butonları */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 12px; background: #334155; color: #94a3b8; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; transition: 0.2s; }
+        .tab-btn.active { background: #0284c7; color: white; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
         input, select { width: 100%; padding: 12px; margin: 8px 0 15px 0; background: #0f172a; border: 1px solid #475569; color: #fff; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
         input:focus, select:focus { outline: none; border-color: #38bdf8; }
         label { font-weight: 600; color: #94a3b8; display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
-        button { background: #0284c7; color: white; padding: 14px 20px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; transition: background 0.2s; }
-        button:hover { background: #0369a1; }
+        
+        .action-btn { background: #0284c7; color: white; padding: 14px 20px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; transition: background 0.2s; }
+        .action-btn:hover { background: #0369a1; }
+        
         .result-container { margin-top: 20px; position: relative; }
         .en-result { background: #090d16; padding: 15px; border-radius: 6px; border: 1px solid #22c55e; color: #4ade80; font-family: monospace; font-size: 15px; word-break: break-all; min-height: 30px; }
-        .copy-btn { background: #22c55e; margin-top: 10px; padding: 10px; font-size: 14px; }
+        .copy-btn { background: #22c55e; margin-top: 10px; padding: 10px; font-size: 14px; color: white; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-weight: bold;}
         .copy-btn:hover { background: #16a34a; }
+        
         .grid-2 { display: flex; gap: 15px; }
         .grid-2 > div { flex: 1; }
         .loading { color: #facc15 !important; font-style: italic; }
+        .info-text { font-size: 12px; color: #64748b; margin-top: -10px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h2>🚀 Pro AI Prompt Stüdyosu (Canlı Çeviri)</h2>
-    
-    <label>Kim / Ne:</label>
-    <input type="text" id="kisi" placeholder="Örn: gelecekteki uçan bir araba">
+    <h2>🚀 Pro AI Prompt Stüdyosu</h2>
 
-    <label>Ne Yapıyor?:</label>
-    <input type="text" id="eylem" placeholder="Örn: gökdelenler arasında yarışıyor">
-
-    <label>Nerede?:</label>
-    <input type="text" id="yer" placeholder="Örn: neon ışıklı bir şehirde">
-
-    <div class="grid-2">
-        <div>
-            <label>Nasıl Görünüyor? / Duygu:</label>
-            <select id="gorunum">
-                <option value="">Seçiniz (Normal)</option>
-                <option value="happy, smiling">Mutlu, Gülüyor</option>
-                <option value="sad, crying">Üzgün, Ağlıyor</option>
-                <option value="cute, fluffy">Sevimli, Tüylü</option>
-                <option value="cool, charismatic">Havalı, Karizmatik</option>
-                <option value="mysterious, glowing eyes">Gizemli, Parlayan Gözler</option>
-            </select>
-        </div>
-        <div>
-            <label>Kamera / Kadraj:</label>
-            <select id="kamera">
-                <option value="full body shot">Tam Boy (Full Body)</option>
-                <option value="medium shot">Yarım Boy (Medium Shot)</option>
-                <option value="close-up portrait">Yakın Plan (Close-up)</option>
-                <option value="wide angle, epic landscape">Geniş Açı / Manzara</option>
-                <option value="bird's eye view">Kuş Bakışı</option>
-            </select>
-        </div>
+    <!-- Ana Sekme Butonları -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('image')">📸 Görsel Stüdyosu (Image)</button>
+        <button class="tab-btn" onclick="switchTab('video')">🎥 Video Stüdyosu (Video)</button>
     </div>
 
-    <div class="grid-2">
-        <div>
-            <label>Stil / Tarz:</label>
-            <select id="stil">
-                <option value="realistic photography, 8k, highly detailed">Gerçekçi Fotoğraf</option>
-                <option value="cinematic lighting, movie scene, dramatic">Sinematik Film Sahnesi</option>
-                <option value="anime style, studio ghibli, vibrant">Anime / Çizgi Film</option>
-                <option value="3d render, Pixar style, octane render">3D Render (Pixar Tarzı)</option>
-                <option value="cyberpunk style, neon lights, futuristic">Cyberpunk / Neon</option>
-                <option value="oil painting, classical art">Yağlı Boya Tablo</option>
-                <option value="fantasy art, magical, ethereal">Fantastik / Büyülü</option>
-            </select>
+    <!-- ================= GÖRSEL STÜDYOSU ================= -->
+    <div id="image-section" class="section active">
+        <label>Mod Seçimi:</label>
+        <select id="img-mode">
+            <option value="t2i">Text-to-Image (Metinden Görsel)</option>
+            <option value="i2i">Image-to-Image (Görselden Görsele - URL veya Referans)</option>
+        </select>
+
+        <div id="i2i-box" style="display:none;">
+            <label>Referans Görsel URL'si (Image URL):</label>
+            <input type="text" id="img-url" placeholder="Örn: https://site.com/image.jpg (Midjourney için --cref veya --sref kullanılabilir)">
         </div>
-        <div>
-            <label>Işıklandırma (Lighting):</label>
-            <select id="isik">
-                <option value="">Normal Işık</option>
-                <option value="golden hour lighting, warm sunlight">Altın Saat (Gün Batımı Işığı)</option>
-                <option value="dramatic studio lighting, rim light">Stüdyo Işığı (Dramatik)</option>
-                <option value="neon glow, cyberpunk lighting">Neon Parlaması</option>
-                <option value="dark moody lighting, cinematic shadows">Karanlık / Moody Işık</option>
-            </select>
+
+        <label>Kim / Ne:</label>
+        <input type="text" id="img-kisi" placeholder="Örn: gelecekteki savaşçı">
+
+        <label>Ne Yapıyor?:</label>
+        <input type="text" id="img-eylem" placeholder="Örn: kılıç savuruyor">
+
+        <label>Nerede?:</label>
+        <input type="text" id="img-yer" placeholder="Örn: yanan bir şehirde">
+
+        <div class="grid-2">
+            <div>
+                <label>Stil / Tarz:</label>
+                <select id="img-stil">
+                    <option value="realistic photography, 8k">Gerçekçi Fotoğraf</option>
+                    <option value="cinematic movie scene">Sinematik Film</option>
+                    <option value="anime style, studio ghibli">Anime</option>
+                    <option value="3d render, Pixar style">3D Render</option>
+                    <option value="cyberpunk style, neon">Cyberpunk</option>
+                </select>
+            </div>
+            <div>
+                <label>En Boy Oranı:</label>
+                <select id="img-oran">
+                    <option value="--ar 16:9">16:9 (Yatay)</option>
+                    <option value="--ar 9:16">9:16 (Dikey)</option>
+                    <option value="--ar 1:1">1:1 (Kare)</option>
+                </select>
+            </div>
         </div>
+
+        <button class="action-btn" onclick="generateImagePrompt()">Görsel Promptu Üret</button>
     </div>
 
-    <label>Format / En Boy Oranı (Aspect Ratio):</label>
-    <select id="oran">
-        <option value="--ar 16:9">16:9 (Yatay / YouTube / Sinema)</option>
-        <option value="--ar 9:16">9:16 (Dikey / Telefon / TikTok / Story)</option>
-        <option value="--ar 1:1">1:1 (Kare / Instagram Post)</option>
-        <option value="--ar 4:3">4:3 (Klasik Fotoğraf)</option>
-    </select>
 
-    <button onclick="uret()">Prompt Oluştur ve Çevir</button>
+    <!-- ================= VİDEO STÜDYOSU ================= -->
+    <div id="video-section" class="section">
+        <label>Video Modu:</label>
+        <select id="vid-mode">
+            <option value="t2v">Text-to-Video (Metinden Video)</option>
+            <option value="i2v">Image-to-Video (Görselden Video - İlk Kare)</option>
+        </select>
 
+        <label>Ana Konu / Ne Görünüyor?:</label>
+        <input type="text" id="vid-konu" placeholder="Örn: dalgalanan deniz ve gün batımı">
+
+        <div class="grid-2">
+            <div>
+                <label>Kamera Hareketi (Camera Motion):</label>
+                <select id="vid-kamera">
+                    <option value="cinematic slow pan left">Yavaşça Sola Kaydır (Pan Left)</option>
+                    <option value="cinematic slow pan right">Yavaşça Sağa Kaydır (Pan Right)</option>
+                    <option value="drone shot zooming in">Drone ile Yaklaşma (Zoom In)</option>
+                    <option value="drone shot zooming out">Drone ile Uzaklaşma (Zoom Out)</option>
+                    <option value="orbit shot, rotating around the subject">Etrafında Dönme (Orbit)</option>
+                    <option value="first person view, fast movement">Birinci Şahıs (FPV Hareketli)</option>
+                </select>
+            </div>
+            <div>
+                <label>Hareket Hızı (Motion Intensity):</label>
+                <select id="vid-hiz">
+                    <option value="subtle motion, calm">Hafif / Sakin Hareket</option>
+                    <option value="dynamic motion, active">Dinamik / Aktif Hareket</option>
+                    <option value="high speed action, dramatic">Yüksek Hız / Aksiyon</option>
+                    <option value="super slow motion, 4k">Ağır Çekim (Slow Motion)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div>
+                <label>Video Stili / Atmosfer:</label>
+                <select id="vid-stil">
+                    <option value="cinematic movie footage, 4k, photorealistic">Sinematik Film Görüntüsü</option>
+                    <option value="drone footage, aerial view">Drone Çekimi</option>
+                    <option value="vintage 8mm film, grain">Retro / 8mm Film</option>
+                    <option value="cyberpunk aesthetic, neon glow">Cyberpunk Atmosfer</option>
+                    <option value="anime aesthetic, fluid motion">Anime Hareketi</option>
+                </select>
+            </div>
+            <div>
+                <label>Işıklandırma:</label>
+                <select id="vid-isik">
+                    <option value="golden hour lighting">Gün Batımı (Golden Hour)</option>
+                    <option value="dramatic shadows, moody">Dramatik Gölgeler</option>
+                    <option value="bright daylight">Parlak Gün Işığı</option>
+                    <option value="neon lighting">Neon Işıklar</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="action-btn" onclick="generateVideoPrompt()">Video Promptu Üret</button>
+    </div>
+
+
+    <!-- ================= ORTAK ÇIKTI ALANI ================= -->
     <div class="result-container">
-        <label>Hazır İngilizce Prompt:</label>
+        <label>Hazır İngilizce Prompt (AI Uyumlu):</label>
         <div class="en-result" id="enSonuc">Komut üretmek için butona basın...</div>
         <button class="copy-btn" onclick="kopyala()">📋 Kopyala</button>
     </div>
 </div>
 
 <script>
-    // Ücretsiz ve API Anahtarı gerektirmeyen çeviri fonksiyonu
+    // Sekme Değiştirme Fonksiyonu
+    function switchTab(tab) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+
+        if(tab === 'image') {
+            document.querySelector('.tabs button:nth-child(1)').classList.add('active');
+            document.getElementById('image-section').classList.add('active');
+        } else {
+            document.querySelector('.tabs button:nth-child(2)').classList.add('active');
+            document.getElementById('video-section').classList.add('active');
+        }
+    }
+
+    // Image-to-Image mod kontrolü
+    document.getElementById('img-mode').addEventListener('change', function() {
+        let box = document.getElementById('i2i-box');
+        box.style.display = (this.value === 'i2i') ? 'block' : 'none';
+    });
+
+    // Çeviri API
     async function translateText(text) {
         if (!text.trim()) return "";
         try {
@@ -113,46 +192,66 @@
             if (data && data.responseData && data.responseData.translatedText) {
                 return data.responseData.translatedText;
             }
-        } catch (error) {
-            console.error("Çeviri hatası:", error);
-        }
-        return text; // Hata olursa orijinalini döndür
+        } catch (error) { console.error("Çeviri hatası:", error); }
+        return text;
     }
 
-    async function uret() {
+    // Görsel Prompt Üretici
+    async function generateImagePrompt() {
         let sonucKutusu = document.getElementById('enSonuc');
-        sonucKutusu.innerText = "Çevriliyor ve oluşturuluyor... Lütfen bekleyin ⏳";
+        sonucKutusu.innerText = "Görsel komutu hazırlanıyor... ⏳";
         sonucKutusu.classList.add("loading");
 
-        // Girdileri al
-        let h_kisi = document.getElementById('kisi').value;
-        let h_eylem = document.getElementById('eylem').value;
-        let h_yer = document.getElementById('yer').value;
+        let mode = document.getElementById('img-mode').value;
+        let url = document.getElementById('img-url').value.trim();
+        let h_kisi = document.getElementById('img-kisi').value;
+        let h_eylem = document.getElementById('img-eylem').value;
+        let h_yer = document.getElementById('img-yer').value;
 
-        // Eşzamanlı olarak API üzerinden Türkçe'den İngilizceye çevir
         let kisi = await translateText(h_kisi);
         let eylem = await translateText(h_eylem);
         let yer = await translateText(h_yer);
 
-        let gorunum = document.getElementById('gorunum').value;
-        let kamera = document.getElementById('kamera').value;
-        let stil = document.getElementById('stil').value;
-        let isik = document.getElementById('isik').value;
-        let oran = document.getElementById('oran').value;
+        let stil = document.getElementById('img-stil').value;
+        let oran = document.getElementById('img-oran').value;
 
-        // Tüm parçaları birleştir
-        let parcalar = [kisi, eylem, yer, gorunum, kamera, stil, isik, oran].filter(Boolean);
+        let parcalar = [];
+        if(mode === 'i2i' && url) parcalar.push(url);
+        parcalar.push(kisi, eylem, yer, stil, oran);
+
+        let sonuc = parcalar.filter(Boolean).join(", ");
+        sonucKutusu.classList.remove("loading");
+        sonucKutusu.innerText = sonuc || "Lütfen alanları doldurun!";
+    }
+
+    // Video Prompt Üretici
+    async function generateVideoPrompt() {
+        let sonucKutusu = document.getElementById('enSonuc');
+        sonucKutusu.innerText = "Video komutu hazırlanıyor... ⏳";
+        sonucKutusu.classList.add("loading");
+
+        let mode = document.getElementById('vid-mode').value;
+        let h_konu = document.getElementById('vid-konu').value;
+        let konu = await translateText(h_konu);
+
+        let kamera = document.getElementById('vid-kamera').value;
+        let hiz = document.getElementById('vid-hiz').value;
+        let stil = document.getElementById('vid-stil').value;
+        let isik = document.getElementById('vid-isik').value;
+
+        let parcalar = [konu, kamera, hiz, stil, isik, "high quality, smooth motion, 4k"].filter(Boolean);
         let sonuc = parcalar.join(", ");
 
         sonucKutusu.classList.remove("loading");
-        sonucKutusu.innerText = sonuc || "Lütfen en az bir alanı doldurun!";
+        sonucKutusu.innerText = sonuc || "Lütfen ana konuyu yazın!";
     }
 
+    // Kopyala
     function kopyala() {
         let metin = document.getElementById('enSonuc').innerText;
-        if(metin.includes("Lütfen") || metin.includes("Çevriliyor")) return;
+        if(metin.includes("Lütfen") || metin.includes("hazırlanıyor")) return;
         navigator.clipboard.writeText(metin).then(() => {
-            alert("Prompt kopyalandı! Midjourney'e yapıştırabilirsin 🚀");
+            alert("Video/Görsel promptu kopyalandı! Runway, Luma veya Midjourney'e yapıştırabilirsin 🚀");
         });
     }
 </script>
