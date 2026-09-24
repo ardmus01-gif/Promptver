@@ -2,103 +2,145 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>AI Prompt Üretici</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro AI Prompt Stüdyosu</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; max-width: 650px; margin: auto; }
-        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
-        label { font-weight: bold; color: #333; display: block; margin-top: 10px; }
-        button { background: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; margin-top: 15px;}
-        button:hover { background: #45a049; }
-        .result { background: #e2e8f0; padding: 15px; margin-top: 15px; border-radius: 4px; word-break: break-all; min-height: 20px; }
-        .en-result { background: #d4edda; font-weight: bold; color: #155724; font-size: 16px; border: 1px solid #c3e6cb; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; max-width: 700px; margin: auto; }
+        .box { background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid #334155; }
+        h2 { text-align: center; color: #38bdf8; margin-bottom: 20px; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0 15px 0; background: #0f172a; border: 1px solid #475569; color: #fff; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input:focus, select:focus { outline: none; border-color: #38bdf8; }
+        label { font-weight: 600; color: #94a3b8; display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+        button { background: #0284c7; color: white; padding: 14px 20px; border: none; border-radius: 6px; cursor: pointer; width: 100%; font-size: 16px; font-weight: bold; transition: background 0.2s; }
+        button:hover { background: #0369a1; }
+        .result-container { margin-top: 20px; position: relative; }
+        .en-result { background: #090d16; padding: 15px; border-radius: 6px; border: 1px solid #22c55e; color: #4ade80; font-family: monospace; font-size: 15px; word-break: break-all; min-height: 30px; }
+        .copy-btn { background: #22c55e; margin-top: 10px; padding: 10px; font-size: 14px; }
+        .copy-btn:hover { background: #16a34a; }
+        .grid-2 { display: flex; gap: 15px; }
+        .grid-2 > div { flex: 1; }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h2>🎨 Gelişmiş AI Prompt Üretici</h2>
+    <h2>🚀 Pro AI Prompt Stüdyosu</h2>
     
-    <label>Kim / Ne (Örn: sevimli bir kedi):</label>
-    <input type="text" id="kisi" placeholder="Örn: a cute cat">
+    <label>Kim / Ne:</label>
+    <input type="text" id="kisi" placeholder="Örn: sevimli bir kedi veya küçük bir çocuk">
 
-    <label>Ne Yapıyor? (Örn: gitar çalıyor):</label>
-    <input type="text" id="eylem" placeholder="Örn: playing guitar">
+    <label>Ne Yapıyor?:</label>
+    <input type="text" id="eylem" placeholder="Örn: bisiklet sürüyor / kahve içiyor">
 
-    <label>Nerede? (Örn: sahnede):</label>
-    <input type="text" id="yer" placeholder="Örn: on a stage">
+    <label>Nerede?:</label>
+    <input type="text" id="yer" placeholder="Örn: sahil yolunda / uzay istasyonunda">
 
-    <label>Nasıl Görünüyor? / Duygu:</label>
-    <select id="gorunum">
-        <option value="">Seçiniz (Normal)</option>
-        <option value="happy, smiling">Mutlu, Gülüyor</option>
-        <option value="sad, crying">Üzgün, Ağlıyor</option>
-        <option value="angry, fierce">Kızgın, Öfkeli</option>
-        <option value="surprised, shocked">Şaşırmış</option>
-        <option value="cute, fluffy">Sevimli, Tüylü</option>
-        <option value="cool, charismatic">Havalı, Karizmatik</option>
-    </select>
+    <div class="grid-2">
+        <div>
+            <label>Nasıl Görünüyor? / Duygu:</label>
+            <select id="gorunum">
+                <option value="">Seçiniz (Normal)</option>
+                <option value="happy, smiling">Mutlu, Gülüyor</option>
+                <option value="sad, crying">Üzgün, Ağlıyor</option>
+                <option value="cute, fluffy">Sevimli, Tüylü</option>
+                <option value="cool, charismatic">Havalı, Karizmatik</option>
+                <option value="mysterious, glowing eyes">Gizemli, Parlayan Gözler</option>
+            </select>
+        </div>
+        <div>
+            <label>Kamera / Kadraj:</label>
+            <select id="kamera">
+                <option value="full body shot">Tam Boy (Full Body)</option>
+                <option value="medium shot">Yarım Boy (Medium Shot)</option>
+                <option value="close-up portrait">Yakın Plan (Close-up)</option>
+                <option value="wide angle, epic landscape">Geniş Açı / Manzara</option>
+                <option value="bird's eye view">Kuş Bakışı</option>
+            </select>
+        </div>
+    </div>
 
-    <label>Kamera / Kadraj:</label>
-    <select id="kamera">
-        <option value="">Seçiniz (Varsayılan)</option>
-        <option value="full body shot">Tam Boy (Full Body)</option>
-        <option value="medium shot">Yarım Boy (Medium Shot)</option>
-        <option value="close-up portrait">Yakın Plan Portre (Close-up)</option>
-        <option value="extreme close-up">Sadece Surat (Extreme Close-up)</option>
-        <option value="wide angle, epic landscape">Geniş Açı / Manzara</option>
-        <option value="bird's eye view">Kuş Bakışı</option>
-    </select>
+    <div class="grid-2">
+        <div>
+            <label>Stil / Tarz:</label>
+            <select id="stil">
+                <option value="realistic photography, 8k, highly detailed">Gerçekçi Fotoğraf</option>
+                <option value="cinematic lighting, movie scene, dramatic">Sinematik Film Sahnesi</option>
+                <option value="anime style, studio ghibli, vibrant">Anime / Çizgi Film</option>
+                <option value="3d render, Pixar style, octane render">3D Render (Pixar Tarzı)</option>
+                <option value="cyberpunk style, neon lights, futuristic">Cyberpunk / Neon</option>
+                <option value="oil painting, classical art">Yağlı Boya Tablo</option>
+                <option value="fantasy art, magical, ethereal">Fantastik / Büyülü</option>
+            </select>
+        </div>
+        <div>
+            <label>Işıklandırma (Lighting):</label>
+            <select id="isik">
+                <option value="">Normal Işık</option>
+                <option value="golden hour lighting, warm sunlight">Altın Saat (Gün Batımı Işığı)</option>
+                <option value="dramatic studio lighting, rim light">Stüdyo Işığı (Dramatik)</option>
+                <option value="neon glow, cyberpunk lighting">Neon Parlaması</option>
+                <option value="dark moody lighting, cinematic shadows">Karanlık / Moody Işık</option>
+            </select>
+        </div>
+    </div>
 
-    <label>Stil / Tarz:</label>
-    <select id="stil">
-        <option value="">Seçiniz (Gerçekçi)</option>
-        <option value="realistic photography, 8k, highly detailed">Gerçekçi Fotoğraf (Realistic)</option>
-        <option value="anime style, 2d animation, studio ghibli">Anime / Çizgi Film</option>
-        <option value="cinematic lighting, movie scene, dramatic">Sinematik / Film Sahnesi</option>
-        <option value="oil painting, classical art">Yağlı Boya Tablo</option>
-        <option value="cyberpunk style, neon lights, futuristic">Cyberpunk / Neon</option>
-        <option value="3d render, Pixar style, octane render">3D Render (Pixar Tarzı)</option>
-        <option value="watercolor painting">Sulu Boya</option>
-        <option value="fantasy art, magical">Fantastik / Büyülü</option>
+    <label>Format / En Boy Oranı (Aspect Ratio):</label>
+    <select id="oran">
+        <option value="--ar 16:9">16:9 (Yatay / YouTube / Sinema)</option>
+        <option value="--ar 9:16">9:16 (Dikey / Telefon / TikTok / Story)</option>
+        <option value="--ar 1:1">1:1 (Kare / Instagram Post)</option>
+        <option value="--ar 4:3">4:3 (Klasik Fotoğraf)</option>
     </select>
 
     <button onclick="uret()">Prompt Oluştur</button>
 
-    <h3>İngilizce Prompt (Kopyala & Yapıştır):</h3>
-    <div class="result en-result" id="enSonuc">Henüz prompt oluşturulmadı...</div>
+    <div class="result-container">
+        <label>Hazır İngilizce Prompt:</label>
+        <div class="en-result" id="enSonuc">Komut üretmek için butona basın...</div>
+        <button class="copy-btn" onclick="kopyala()">📋 Kopyala</button>
+    </div>
 </div>
 
 <script>
-    // Basit Türkçe -> İngilizce kelime çevirisi (Kutulara Türkçe yazılırsa diye)
+    // Genişletilmiş Türkçe -> İngilizce Sözlük
     const sozluk = {
-        "kedi": "cat", "kopek": "dog", "köpek": "dog", "kurt": "wolf",
-        "cocuk": "child", "çocuk": "child", "kadin": "woman", "kadın": "woman", "adam": "man"
+        "cocuk": "a child", "çocuk": "a child", "kiz": "a little girl", "kız": "a little girl",
+        "adam": "a man", "kadin": "a woman", "kadın": "a woman", "kedi": "a cat", "kopek": "a dog", "köpek": "a dog",
+        "topla oynuyor": "playing with a ball", "kosuyor": "running", "koşuyor": "running",
+        "bisiklet sürüyor": "riding a bicycle", "kahve içiyor": "drinking coffee", "yemek yiyor": "eating food",
+        "parkta": "in a park", "sahil yolunda": "on a coastal road", "sokakta": "on the street",
+        "evde": "at home", "uzay istasyonunda": "in a space station", "ormanda": "in a magical forest"
     };
 
-    function cevir(metin) {
+    function kelimeCevir(metin) {
         let t = metin.toLowerCase().trim();
+        if (!t) return "";
+        // Eğer tam eşleşme varsa çevir, yoksa kullanıcının yazdığını (İngilizce yazdıysa) aynen al
         return sozluk[t] || t;
     }
 
     function uret() {
-        let kisi = cevir(document.getElementById('kisi').value);
-        let eylem = cevir(document.getElementById('eylem').value);
-        let yer = cevir(document.getElementById('yer').value);
+        let kisi = kelimeCevir(document.getElementById('kisi').value);
+        let eylem = kelimeCevir(document.getElementById('eylem').value);
+        let yer = kelimeCevir(document.getElementById('yer').value);
         let gorunum = document.getElementById('gorunum').value;
         let kamera = document.getElementById('kamera').value;
         let stil = document.getElementById('stil').value;
+        let isik = document.getElementById('isik').value;
+        let oran = document.getElementById('oran').value;
 
-        // Tüm parçaları diziye atıp boş olmayanları virgülle birleştiriyoruz
-        let parcalar = [kisi, eylem, yer, gorunum, kamera, stil].filter(Boolean);
-        
+        // Tüm parçaları birleştir
+        let parcalar = [kisi, eylem, yer, gorunum, kamera, stil, isik, oran].filter(Boolean);
         let sonuc = parcalar.join(", ");
 
-        if(sonuc) {
-            document.getElementById('enSonuc').innerText = sonuc;
-        } else {
-            document.getElementById('enSonuc').innerText = "Lütfen en az bir alanı doldurun veya seçin!";
-        }
+        document.getElementById('enSonuc').innerText = sonuc || "Lütfen en az bir alanı doldurun!";
+    }
+
+    function kopyala() {
+        let metin = document.getElementById('enSonuc').innerText;
+        navigator.clipboard.writeText(metin).then(() => {
+            alert("Prompt kopyalandı! Midjourney'e yapıştırabilirsin 🚀");
+        });
     }
 </script>
 
