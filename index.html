@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro AI Prompt Stüdyosu</title>
+    <title>Pro AI Prompt Stüdyosu (Canlı Çeviri)</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; max-width: 700px; margin: auto; }
         .box { background: #1e293b; padding: 25px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid #334155; }
@@ -19,21 +19,22 @@
         .copy-btn:hover { background: #16a34a; }
         .grid-2 { display: flex; gap: 15px; }
         .grid-2 > div { flex: 1; }
+        .loading { color: #facc15 !important; font-style: italic; }
     </style>
 </head>
 <body>
 
 <div class="box">
-    <h2>🚀 Pro AI Prompt Stüdyosu</h2>
+    <h2>🚀 Pro AI Prompt Stüdyosu (Canlı Çeviri)</h2>
     
     <label>Kim / Ne:</label>
-    <input type="text" id="kisi" placeholder="Örn: sevimli bir kedi veya küçük bir çocuk">
+    <input type="text" id="kisi" placeholder="Örn: gelecekteki uçan bir araba">
 
     <label>Ne Yapıyor?:</label>
-    <input type="text" id="eylem" placeholder="Örn: bisiklet sürüyor / kahve içiyor">
+    <input type="text" id="eylem" placeholder="Örn: gökdelenler arasında yarışıyor">
 
     <label>Nerede?:</label>
-    <input type="text" id="yer" placeholder="Örn: sahil yolunda / uzay istasyonunda">
+    <input type="text" id="yer" placeholder="Örn: neon ışıklı bir şehirde">
 
     <div class="grid-2">
         <div>
@@ -92,7 +93,7 @@
         <option value="--ar 4:3">4:3 (Klasik Fotoğraf)</option>
     </select>
 
-    <button onclick="uret()">Prompt Oluştur</button>
+    <button onclick="uret()">Prompt Oluştur ve Çevir</button>
 
     <div class="result-container">
         <label>Hazır İngilizce Prompt:</label>
@@ -102,27 +103,37 @@
 </div>
 
 <script>
-    // Genişletilmiş Türkçe -> İngilizce Sözlük
-    const sozluk = {
-        "cocuk": "a child", "çocuk": "a child", "kiz": "a little girl", "kız": "a little girl",
-        "adam": "a man", "kadin": "a woman", "kadın": "a woman", "kedi": "a cat", "kopek": "a dog", "köpek": "a dog",
-        "topla oynuyor": "playing with a ball", "kosuyor": "running", "koşuyor": "running",
-        "bisiklet sürüyor": "riding a bicycle", "kahve içiyor": "drinking coffee", "yemek yiyor": "eating food",
-        "parkta": "in a park", "sahil yolunda": "on a coastal road", "sokakta": "on the street",
-        "evde": "at home", "uzay istasyonunda": "in a space station", "ormanda": "in a magical forest"
-    };
-
-    function kelimeCevir(metin) {
-        let t = metin.toLowerCase().trim();
-        if (!t) return "";
-        // Eğer tam eşleşme varsa çevir, yoksa kullanıcının yazdığını (İngilizce yazdıysa) aynen al
-        return sozluk[t] || t;
+    // Ücretsiz ve API Anahtarı gerektirmeyen çeviri fonksiyonu
+    async function translateText(text) {
+        if (!text.trim()) return "";
+        try {
+            let url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=tr|en`;
+            let response = await fetch(url);
+            let data = await response.json();
+            if (data && data.responseData && data.responseData.translatedText) {
+                return data.responseData.translatedText;
+            }
+        } catch (error) {
+            console.error("Çeviri hatası:", error);
+        }
+        return text; // Hata olursa orijinalini döndür
     }
 
-    function uret() {
-        let kisi = kelimeCevir(document.getElementById('kisi').value);
-        let eylem = kelimeCevir(document.getElementById('eylem').value);
-        let yer = kelimeCevir(document.getElementById('yer').value);
+    async function uret() {
+        let sonucKutusu = document.getElementById('enSonuc');
+        sonucKutusu.innerText = "Çevriliyor ve oluşturuluyor... Lütfen bekleyin ⏳";
+        sonucKutusu.classList.add("loading");
+
+        // Girdileri al
+        let h_kisi = document.getElementById('kisi').value;
+        let h_eylem = document.getElementById('eylem').value;
+        let h_yer = document.getElementById('yer').value;
+
+        // Eşzamanlı olarak API üzerinden Türkçe'den İngilizceye çevir
+        let kisi = await translateText(h_kisi);
+        let eylem = await translateText(h_eylem);
+        let yer = await translateText(h_yer);
+
         let gorunum = document.getElementById('gorunum').value;
         let kamera = document.getElementById('kamera').value;
         let stil = document.getElementById('stil').value;
@@ -133,11 +144,13 @@
         let parcalar = [kisi, eylem, yer, gorunum, kamera, stil, isik, oran].filter(Boolean);
         let sonuc = parcalar.join(", ");
 
-        document.getElementById('enSonuc').innerText = sonuc || "Lütfen en az bir alanı doldurun!";
+        sonucKutusu.classList.remove("loading");
+        sonucKutusu.innerText = sonuc || "Lütfen en az bir alanı doldurun!";
     }
 
     function kopyala() {
         let metin = document.getElementById('enSonuc').innerText;
+        if(metin.includes("Lütfen") || metin.includes("Çevriliyor")) return;
         navigator.clipboard.writeText(metin).then(() => {
             alert("Prompt kopyalandı! Midjourney'e yapıştırabilirsin 🚀");
         });
